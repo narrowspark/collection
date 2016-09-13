@@ -138,6 +138,19 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     {
         return $this->toJson();
     }
+     /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+    }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+    }
 
     /**
      * Determine if an item exists at an offset.
@@ -267,7 +280,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     protected function getArrayableItems($items): array
     {
         if (is_array($items)) {
-            return new RecursiveArrayIterator($items);
+            return $items;
         } elseif (is_callable($items)) {
             return $items();
         } elseif ($items instanceof self) {
