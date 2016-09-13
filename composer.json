@@ -20,11 +20,13 @@
         }
     ],
     "require": {
-        "php"                                  : "^7.0"
+        "php"                                  : "^7.0",
+        "narrowspark/arr"                      : "^1.1"
     },
     "require-dev": {
         "narrowspark/php-cs-fixer-config"      : "^1.4",
         "mockery/mockery"                      : "^0.9",
+        "phpbench/phpbench"                    : "^0.11",
         "phpunit/phpunit"                      : "^5.1"
     },
     "autoload": {
