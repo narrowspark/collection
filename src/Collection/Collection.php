@@ -6,14 +6,14 @@ use ArrayAccess;
 use ArrayIterator;
 use BadMethodCallException;
 use CachingIterator;
-use Countable;
 use Closure;
-use JsonSerializable;
-use IteratorAggregate;
-use Serializable;
-use RecursiveArrayIterator;
-use Traversable;
+use Countable;
 use Iterator;
+use IteratorAggregate;
+use JsonSerializable;
+use RecursiveArrayIterator;
+use Serializable;
+use Traversable;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
 {
@@ -138,14 +138,15 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     {
         return $this->toJson();
     }
-     /**
+
+    /**
      * {@inheritdoc}
      */
     public function serialize()
     {
     }
 
-     /**
+    /**
      * {@inheritdoc}
      */
     public function unserialize($serialized)
@@ -230,9 +231,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @param string $method
      * @param array  $parameters
      *
-     * @return mixed
-     *
      * @throws \BadMethodCallException
+     *
+     * @return mixed
      */
     public static function __callStatic($method, $parameters)
     {
@@ -253,9 +254,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @param string $method
      * @param array  $parameters
      *
-     * @return mixed
-     *
      * @throws \BadMethodCallException
+     *
+     * @return mixed
      */
     public function __call($method, $parameters)
     {
@@ -270,7 +271,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         return call_user_func_array(static::$macros[$method], $parameters);
     }
 
-     /**
+    /**
      * Results array of items from Collection or Arrayable.
      *
      * @param callable|Closure|array|Traversable\Iterator|self|IteratorAggregate|JsonSerializable $items
