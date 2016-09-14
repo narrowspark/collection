@@ -72,7 +72,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testAppend()
     {
-        $c = new Collection([1, 3, 3, 2,]);
+        $c = new Collection([1, 3, 3, 2]);
 
         $this->assertEquals([1, 3, 3, 2, 1], $c->append(1)->values()->all());
     }
