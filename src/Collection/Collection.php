@@ -13,15 +13,16 @@ use IteratorAggregate;
 use JsonSerializable;
 use Serializable;
 use Traversable;
+use Narrowspark\Arr\StaticArr as Arr;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
 {
     /**
-     * The registered string macros.
+     * The registered string extensions.
      *
      * @var array
      */
-    protected static $macros = [];
+    protected static $extensions = [];
 
     /**
      * The items contained in the collection.
@@ -62,15 +63,15 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public static function __callStatic($method, $parameters)
     {
-        if (! static::hasMacro($method)) {
+        if (! static::hasExtensions($method)) {
             throw new BadMethodCallException("Method {$method} does not exist.");
         }
 
-        if (static::$macros[$method] instanceof Closure) {
-            return call_user_func_array(Closure::bind(static::$macros[$method], null, static::class), $parameters);
+        if (static::$extensions[$method] instanceof Closure) {
+            return call_user_func_array(Closure::bind(static::$extensions[$method], null, static::class), $parameters);
         }
 
-        return call_user_func_array(static::$macros[$method], $parameters);
+        return call_user_func_array(static::$extensions[$method], $parameters);
     }
 
     /**
@@ -85,15 +86,15 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function __call($method, $parameters)
     {
-        if (! static::hasMacro($method)) {
+        if (! static::hasExtensions($method)) {
             throw new BadMethodCallException("Method {$method} does not exist.");
         }
 
-        if (static::$macros[$method] instanceof Closure) {
-            return call_user_func_array(static::$macros[$method]->bindTo($this, static::class), $parameters);
+        if (static::$extensions[$method] instanceof Closure) {
+            return call_user_func_array(static::$extensions[$method]->bindTo($this, static::class), $parameters);
         }
 
-        return call_user_func_array(static::$macros[$method], $parameters);
+        return call_user_func_array(static::$extensions[$method], $parameters);
     }
 
     /**
@@ -104,6 +105,60 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function all(): array
     {
         return $this->items;
+    }
+
+    /**
+     * Merge the collection with the given items.
+     *
+     * @param callable|Closure|array|Traversable\Iterator|self|IteratorAggregate|JsonSerializable $items
+     *
+     * @return static
+     */
+    public function merge($items)
+    {
+        return new static(array_merge($this->items, $this->getArrayableItems($items)));
+    }
+
+    /**
+     * Returns a new collection with $value added as last element. If $key is not provided
+     * it will be next integer index.
+     *
+     * @param mixed      $value
+     * @param mixed|null $key
+     *
+     * @return static
+     */
+    public function append($value, $key = null)
+    {
+        $items = $this->items;
+
+        if ($key === null) {
+            $items[] = $value;
+        } else {
+            $items[$key] = $value;
+        }
+
+        return new static($items);
+    }
+
+    /**
+     * Reset the keys on the underlying array.
+     *
+     * @return static
+     */
+    public function values()
+    {
+        return new static(array_values($this->items));
+    }
+
+    /**
+     * Collapse the collection of items into a single array.
+     *
+     * @return static
+     */
+    public function collapse()
+    {
+        return new static(Arr::collapse($this->items));
     }
 
     /**
@@ -248,26 +303,26 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
-     * Register a custom macro.
+     * Register a custom extensions.
      *
      * @param string   $name
-     * @param callable $macro
+     * @param callable $callback
      */
-    public static function macro(string $name, callable $macro)
+    public static function extend(string $name, callable $callback)
     {
-        static::$macros[$name] = $macro;
+        static::$extensions[$name] = $callback;
     }
 
     /**
-     * Checks if macro is registered.
+     * Checks if extensions is registered.
      *
      * @param string $name
      *
      * @return bool
      */
-    public static function hasMacro(string $name): bool
+    public static function hasExtensions(string $name): bool
     {
-        return isset(static::$macros[$name]);
+        return isset(static::$extensions[$name]);
     }
 
     /**
@@ -277,12 +332,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      *
      * @return array
      */
-    protected function getArrayableItems($items): array
+    protected function getArrayableItems($items)
     {
         if (is_array($items)) {
             return $items;
         } elseif (is_callable($items)) {
-            return $items();
+            return call_user_func($items);
         } elseif ($items instanceof self) {
             return $items->all();
         } elseif ($items instanceof IteratorAggregate) {
