@@ -98,6 +98,71 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
+     * Get the first item from the collection.
+     *
+     * @param callable|null $callback
+     * @param mixed         $default
+     *
+     * @return mixed
+     */
+    public function first(callable $callback = null, $default = null)
+    {
+        return Arr::first($this->items, $callback, $default);
+    }
+
+    /**
+     * Get a flattened array of the items in the collection.
+     *
+     * @param int $depth
+     *
+     * @return static
+     */
+    public function flatten(int $depth = INF)
+    {
+        return new static(Arr::flatten($this->items, $depth));
+    }
+
+    /**
+     * Flip the items in the collection.
+     *
+     * @return static
+     */
+    public function flip()
+    {
+        return new static(array_flip($this->items));
+    }
+
+    /**
+     * Get all items except for those with the specified keys.
+     *
+     * @param mixed $keys
+     *
+     * @return static
+     */
+    public function except($keys)
+    {
+        $keys = is_array($keys) ? $keys : func_get_args();
+
+        return new static(Arr::except($this->items, $keys));
+    }
+
+    /**
+     * Run a filter over each of the items.
+     *
+     * @param callable|null $callback
+     *
+     * @return static
+     */
+    public function filter(callable $callback = null)
+    {
+        if ($callback) {
+            return new static(Arr::where($this->items, $callback));
+        }
+
+        return new static(array_filter($this->items));
+    }
+
+    /**
      * Get all of the items in the collection.
      *
      * @return array
@@ -162,6 +227,57 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
+     * Get the keys of the collection items.
+     *
+     * @return static
+     */
+    public function keys()
+    {
+        return new static(array_keys($this->items));
+    }
+
+    /**
+     * Get the last item from the collection.
+     *
+     * @param callable|null $callback
+     * @param mixed         $default
+     *
+     * @return mixed
+     */
+    public function last(callable $callback = null, $default = null)
+    {
+        return Arr::last($this->items, $callback, $default);
+    }
+
+    /**
+     * Get the values of a given key.
+     *
+     * @param string      $value
+     * @param string|null $key
+     *
+     * @return static
+     */
+    public function pluck($value, $key = null)
+    {
+        return new static(Arr::pluck($this->items, $value, $key));
+    }
+
+    /**
+     * Push an item onto the beginning of the collection.
+     *
+     * @param mixed $value
+     * @param mixed $key
+     *
+     * @return $this
+     */
+    public function prepend($value, $key = null)
+    {
+        $this->items = Arr::prepend($this->items, $value, $key);
+
+        return $this;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -175,6 +291,33 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
 
             return $value;
         }, $this->items);
+    }
+
+    /**
+     * Get and remove an item from the collection.
+     *
+     * @param mixed $key
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function pull($key, $default = null)
+    {
+        return Arr::pull($this->items, $key, $default);
+    }
+
+    /**
+     * Get the items with the specified keys.
+     *
+     * @param mixed $keys
+     *
+     * @return static
+     */
+    public function only($keys)
+    {
+        $keys = is_array($keys) ? $keys : func_get_args();
+
+        return new static(Arr::only($this->items, $keys));
     }
 
     /**
