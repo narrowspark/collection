@@ -11,9 +11,9 @@ use Countable;
 use Iterator;
 use IteratorAggregate;
 use JsonSerializable;
+use Narrowspark\Arr\StaticArr as Arr;
 use Serializable;
 use Traversable;
-use Narrowspark\Arr\StaticArr as Arr;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
 {
