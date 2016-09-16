@@ -108,5 +108,4 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $c->pull(0, 'foo'));
     }
-
 }
