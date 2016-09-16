@@ -21,7 +21,7 @@
     ],
     "require": {
         "php"                                  : "^7.0",
-        "narrowspark/arr"                      : "^1.1"
+        "narrowspark/arr"                      : "^2.1"
     },
     "require-dev": {
         "narrowspark/php-cs-fixer-config"      : "^2.0",

@@ -76,4 +76,37 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals([1, 3, 3, 2, 1], $c->append(1)->values()->all());
     }
+
+    public function testOnly()
+    {
+        $c = new Collection(['first' => 'Foo', 'last' => 'Bar', 'baz' => 'test']);
+
+        $this->assertEquals(['first' => 'Foo'], $c->only(['first', 'missing'])->all());
+        $this->assertEquals(['first' => 'Foo'], $c->only('first', 'missing')->all());
+        $this->assertEquals(['first' => 'Foo', 'baz' => 'test'], $c->only(['first', 'baz'])->all());
+        $this->assertEquals(['first' => 'Foo', 'baz' => 'test'], $c->only('first', 'baz')->all());
+    }
+
+    public function testPullRetrievesItemFromCollection()
+    {
+        $c = new Collection(['foo', 'bar']);
+
+        $this->assertEquals('foo', $c->pull(0));
+    }
+
+    public function testPullRemovesItemFromCollection()
+    {
+        $c = new Collection(['foo', 'bar']);
+        $c->pull(0);
+
+        $this->assertEquals([1 => 'bar'], $c->all());
+    }
+
+    public function testPullReturnsDefault()
+    {
+        $c = new Collection([]);
+
+        $this->assertEquals('foo', $c->pull(0, 'foo'));
+    }
+
 }

@@ -29,8 +29,8 @@ install:
 script:
   - mkdir -p build/logs
   - vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --diff --dry-run
-  - vendor/bin/phpunit -c phpunit.xml.dist --verbose
+  - vendor/bin/phpunit -c phpunit.xml.dist --verbose --coverage-clover=coverage.clover
 
 after_script:
   - if [ $TRAVIS_PHP_VERSION = "7.0" ] && [ $setup = 'basic' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ $TRAVIS_PHP_VERSION = "7.0" ] && [ $setup = 'basic' ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/coverage.clover; fi
+  - if [ $TRAVIS_PHP_VERSION = "7.0" ] && [ $setup = 'basic' ]; then php ocular.phar code-coverage:upload --access-token="950f2d5618119d96146ed275734e5a481a1db01628fb4cbe3a7a2dd9c9485414" --format=php-clover coverage.clover; fi

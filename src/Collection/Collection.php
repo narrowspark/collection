@@ -11,7 +11,7 @@ use Countable;
 use Iterator;
 use IteratorAggregate;
 use JsonSerializable;
-use Narrowspark\Arr\StaticArr as Arr;
+use Narrowspark\Arr\Arr;
 use Serializable;
 use Traversable;
 
