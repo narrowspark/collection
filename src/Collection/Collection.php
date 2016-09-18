@@ -1812,9 +1812,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
                 return array_merge($result, [$item]);
             } elseif ($depth === 1) {
                 return array_merge($result, array_values($item));
-            } else {
-                return array_merge($result, self::flattenCallback($item, $depth - 1));
             }
+
+            return array_merge($result, self::flattenCallback($item, $depth - 1));
         }, []);
     }
 }
