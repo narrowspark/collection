@@ -28,7 +28,13 @@ $ composer require narrowspark/collection
 ## Usage
 
 ``` php
-echo "test";
+Use the static helper method "from" to create the collection.
+
+use Narrowspark\Collection\Collection;
+
+$c = Collection::from(['foo', 'bar']);
+
+$c->all(); // ['foo', 'bar']
 ```
 
 ## Change log
@@ -37,17 +43,11 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
-``` bash
-$ composer test
-```
+From the project directory, tests can be ran using phpunit
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email d.bannert@anolilab.de instead of using the issue tracker.
 
 ## Credits
 
