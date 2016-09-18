@@ -750,14 +750,14 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function testUniqueStrict()
     {
         $c = new Collection([
-            ['id' => '0', 'name' => 'zero',],
-            ['id' => '00', 'name' => 'double zero',],
-            ['id' => '0', 'name' => 'again zero',],
+            ['id' => '0', 'name' => 'zero'],
+            ['id' => '00', 'name' => 'double zero'],
+            ['id' => '0', 'name' => 'again zero'],
         ]);
 
         $this->assertEquals([
-            ['id' => '0', 'name' => 'zero',],
-            ['id' => '00', 'name' => 'double zero',],
+            ['id' => '0', 'name' => 'zero'],
+            ['id' => '00', 'name' => 'double zero'],
         ], $c->uniqueStrict('id')->all());
     }
 
@@ -809,7 +809,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             return $x;
         });
 
-        $this->assertEquals(['collection', 'narrowspark',], array_values($data->all()));
+        $this->assertEquals(['collection', 'narrowspark'], array_values($data->all()));
 
         $data = new Collection(['collection', 'narrowspark']);
         $data = $data->sortByDesc(function ($x) {
@@ -894,7 +894,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $data = new Collection(
             [(object) ['name' => 'collection', 'email' => 'foo'],
-            ['name' => 'foo', 'email' => 'bar']]
+            ['name' => 'foo', 'email' => 'bar'], ]
         );
 
         $this->assertEquals(['collection' => 'foo', 'foo' => 'bar'], $data->pluck('email', 'name')->all());
@@ -1160,13 +1160,13 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $data = new Collection([
             ['rating' => 1, 'url' => '1'],
             ['rating' => 1, 'url' => '1'],
-            ['rating' => 2, 'url' => '2']
+            ['rating' => 2, 'url' => '2'],
         ]);
 
         $this->assertEquals(
             [
                 1 => [['rating' => 1, 'url' => '1'], ['rating' => 1, 'url' => '1']],
-                2 => [['rating' => 2, 'url' => '2']]
+                2 => [['rating' => 2, 'url' => '2']],
             ],
             $data->groupBy('rating')->toArray()
         );
@@ -1174,7 +1174,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 1 => [['rating' => 1, 'url' => '1'], ['rating' => 1, 'url' => '1']],
-                2 => [['rating' => 2, 'url' => '2']]
+                2 => [['rating' => 2, 'url' => '2']],
             ],
             $data->groupBy('url')->toArray()
         );
@@ -1185,7 +1185,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $data = new Collection([
             10 => ['rating' => 1, 'url' => '1'],
             20 => ['rating' => 1, 'url' => '1'],
-            30 => ['rating' => 2, 'url' => '2']
+            30 => ['rating' => 2, 'url' => '2'],
         ]);
 
         $expected = [
@@ -1200,7 +1200,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $data = new Collection([
             ['rating' => 1, 'url' => '1'],
             ['rating' => 1, 'url' => '1'],
-            ['rating' => 2, 'url' => '2']
+            ['rating' => 2, 'url' => '2'],
         ]);
         $result = $data->groupBy(function ($item) {
             return $item['rating'];
@@ -1209,7 +1209,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 1 => [['rating' => 1, 'url' => '1'], ['rating' => 1, 'url' => '1']],
-                2 => [['rating' => 2, 'url' => '2']]
+                2 => [['rating' => 2, 'url' => '2']],
             ],
             $result->toArray()
         );
@@ -1220,7 +1220,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $data = new Collection([
             10 => ['rating' => 1, 'url' => '1'],
             20 => ['rating' => 1, 'url' => '1'],
-            30 => ['rating' => 2, 'url' => '2']
+            30 => ['rating' => 2, 'url' => '2'],
         ]);
         $result = $data->groupBy(function ($item) {
             return $item['rating'];
@@ -1291,7 +1291,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $data = new Collection([
             ['rating' => 1, 'name' => '1'],
             ['rating' => 2, 'name' => '2'],
-            ['rating' => 3, 'name' => '3']
+            ['rating' => 3, 'name' => '3'],
         ]);
 
         $result = $data->keyBy('rating');
@@ -1300,7 +1300,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             [
                 1 => ['rating' => 1, 'name' => '1'],
                 2 => ['rating' => 2, 'name' => '2'],
-                3 => ['rating' => 3, 'name' => '3']
+                3 => ['rating' => 3, 'name' => '3'],
             ],
             $result->all()
         );
@@ -1313,7 +1313,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             [
                 2 => ['rating' => 1, 'name' => '1'],
                 4 => ['rating' => 2, 'name' => '2'],
-                6 => ['rating' => 3, 'name' => '3']
+                6 => ['rating' => 3, 'name' => '3'],
             ],
             $result->all()
         );
