@@ -738,13 +738,13 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
             3 => ['id' => 3, 'first' => 'Framework', 'last' => 'Collection'],
         ], $c->unique('first')->all());
 
-        // $this->assertEquals([
-        //     1 => ['id' => 1, 'first' => 'Narrowspark', 'last' => 'Collection'],
-        //     3 => ['id' => 3, 'first' => 'Framework', 'last' => 'Collection'],
-        //     5 => ['id' => 5, 'first' => 'Narrowspark', 'last' => 'Swift'],
-        // ], $c->unique(function ($item) {
-        //     return $item['first'] . $item['last'];
-        // })->all());
+        $this->assertEquals([
+            1 => ['id' => 1, 'first' => 'Narrowspark', 'last' => 'Collection'],
+            3 => ['id' => 3, 'first' => 'Framework', 'last' => 'Collection'],
+            5 => ['id' => 5, 'first' => 'Narrowspark', 'last' => 'Swift'],
+        ], $c->unique(function ($item) {
+            return $item['first'] . $item['last'];
+        })->all());
     }
 
     public function testUniqueStrict()
@@ -1130,7 +1130,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $data = new Collection(['foo', 'bar', 'baz']);
 
-        $result = $data->first(function ($value) {
+        $result = $data->first(function ($key, $value) {
             return $value === 'bar';
         });
 
@@ -1141,7 +1141,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $data = new Collection(['foo', 'bar']);
 
-        $result = $data->first(function ($value) {
+        $result = $data->first(function ($key, $value) {
             return $value === 'baz';
         }, 'default');
 
@@ -1342,10 +1342,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($c->contains(1));
         $this->assertFalse($c->contains(2));
 
-        $this->assertTrue($c->contains(function ($value) {
+        $this->assertTrue($c->contains(function ($key, $value) {
             return $value < 5;
         }));
-        $this->assertFalse($c->contains(function ($value) {
+        $this->assertFalse($c->contains(function ($key, $value) {
             return $value > 5;
         }));
 
@@ -1368,10 +1368,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($c->containsStrict(1));
         $this->assertFalse($c->containsStrict(2));
         $this->assertTrue($c->containsStrict('02'));
-        $this->assertTrue($c->containsStrict(function ($value) {
+        $this->assertTrue($c->containsStrict(function ($key, $value) {
             return $value < 5;
         }));
-        $this->assertFalse($c->containsStrict(function ($value) {
+        $this->assertFalse($c->containsStrict(function ($key, $value) {
             return $value > 5;
         }));
 

@@ -178,7 +178,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         $sorted = $counts->sort();
         $highestValue = $sorted->last();
 
-        return $sorted->filter(function ($value) use ($highestValue) {
+        return $sorted->filter(function ($key, $value) use ($highestValue) {
             return $value == $highestValue;
         })->sort()->keys()->all();
     }
@@ -313,7 +313,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function contains($key, $value = null): bool
     {
         if (func_num_args() == 2) {
-            return $this->contains(function ($item) use ($key, $value) {
+            return $this->contains(function ($itemKey, $item) use ($key, $value) {
                 return self::dataGet($item, $key) == $value;
             });
         }
@@ -336,7 +336,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function containsStrict($key, $value = null): bool
     {
         if (func_num_args() == 2) {
-            return $this->contains(function ($item) use ($key, $value) {
+            return $this->contains(function ($itemKey, $item) use ($key, $value) {
                 return self::dataGet($item, $key) === $value;
             });
         }
@@ -910,12 +910,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function reject($callback): Collection
     {
         if ($this->useAsCallable($callback)) {
-            return $this->filter(function ($value, $key) use ($callback) {
+            return $this->filter(function ($key, $value) use ($callback) {
                 return ! $callback($value, $key);
             });
         }
 
-        return $this->filter(function ($item) use ($callback) {
+        return $this->filter(function ($key, $item) use ($callback) {
             return $item != $callback;
         });
     }
