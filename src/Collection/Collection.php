@@ -115,7 +115,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      *
      * @param callable|string|null $callback
      *
-     * @return integer|double|null
+     * @return int|float|null
      */
     public function average($callback = null)
     {
@@ -936,7 +936,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @param mixed $value
      * @param bool  $strict
      *
-     * @return false|integer|string
+     * @return false|int|string
      */
     public function search($value, $strict = false)
     {
