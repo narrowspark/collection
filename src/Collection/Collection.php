@@ -613,7 +613,6 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         return empty($this->items);
     }
 
-
     /**
      * Determine if the collection is not empty.
      *
