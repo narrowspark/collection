@@ -115,7 +115,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      *
      * @param callable|string|null $callback
      *
-     * @return mixed
+     * @return integer|double|null
      */
     public function average($callback = null)
     {
@@ -575,8 +575,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Concatenate values of a given key as a string.
      *
-     * @param string $value
-     * @param string $glue
+     * @param string      $value
+     * @param string|null $glue
      *
      * @return string
      */
@@ -936,7 +936,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @param mixed $value
      * @param bool  $strict
      *
-     * @return mixed
+     * @return false|integer|string
      */
     public function search($value, $strict = false)
     {
@@ -965,7 +965,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Shuffle the items in the collection.
      *
-     * @param int $seed
+     * @param null|int $seed
      *
      * @return static
      */
@@ -987,8 +987,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Slice the underlying collection array.
      *
-     * @param int $offset
-     * @param int $length
+     * @param int      $offset
+     * @param null|int $length
      *
      * @return static
      */
@@ -1776,7 +1776,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
                     return Arr::value($default);
                 }
 
-                $result = Arr::pluck($target, $key);
+                $result = $this->pluck($target, $key);
 
                 return in_array('*', $key) ? Arr::collapse($result) : $result;
             }
