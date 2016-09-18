@@ -2,8 +2,6 @@
 declare(strict_types=1);
 namespace Narrowspark\Collection;
 
-use Narrowspark\Collection\Collection;
-
 class FilterOneMillionItems
 {
     const ONE_MILLION = 1000000;
