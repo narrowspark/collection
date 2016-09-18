@@ -1183,7 +1183,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Sort an array with a user-defined comparison function and maintain index association.
      *
-     * @param  callable $callback
+     * @param callable $callback
      *
      * @return static
      */
@@ -1212,7 +1212,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Sort an array by keys using a user-defined comparison function.
      *
-     * @param  callable $callback
+     * @param callable $callback
      *
      * @return static
      */
@@ -1233,7 +1233,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Sort an array by values using a user-defined comparison function.
      *
-     * @param  callable $callback
+     * @param callable $callback
      *
      * @return static
      */
