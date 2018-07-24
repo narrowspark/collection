@@ -9,14 +9,14 @@ class LoopOneHundredThousandItems
      */
     public function benchCollectionArray()
     {
-        $collection = Collection::from(range(0, 100000));
+        $collection = Collection::from(\range(0, 100000));
         $collection->each(function ($i) {
         });
     }
 
     public function benchForeachArray()
     {
-        $array = range(0, 100000);
+        $array = \range(0, 100000);
 
         foreach ($array as $i) {
         }

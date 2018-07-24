@@ -4,14 +4,14 @@ namespace Narrowspark\Collection;
 
 class MapOneMillionItems
 {
-    const ONE_MILLION = 1000000;
+    public const ONE_MILLION = 1000000;
 
     /**
      * @Revs(10)
      */
     public function benchCollectionArray()
     {
-        $collection = Collection::from(range(0, static::ONE_MILLION));
+        $collection = Collection::from(\range(0, static::ONE_MILLION));
 
         $result = $collection->map(function ($i) {
             return $i * 2;
@@ -23,9 +23,9 @@ class MapOneMillionItems
      */
     public function benchNativeArrayMap()
     {
-        $result = array_map(function ($i) {
+        $result = \array_map(function ($i) {
             return $i * 2;
-        }, range(0, static::ONE_MILLION));
+        }, \range(0, static::ONE_MILLION));
     }
 
     /**
@@ -33,7 +33,8 @@ class MapOneMillionItems
      */
     public function benchForEachArray()
     {
-        $items = range(0, static::ONE_MILLION);
+        $items = \range(0, static::ONE_MILLION);
+
         foreach ($items as $i => $item) {
             $items[$i] = $item * 2;
         }
